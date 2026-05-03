@@ -11,6 +11,7 @@ class Task:
     done: bool = False
     tags: list[str] = field(default_factory=list)
     comments: list[str] = field(default_factory=list)
+    category: Optional[str] = None
 
 
 class TaskManager:
@@ -18,8 +19,8 @@ class TaskManager:
         self._tasks: dict[int, Task] = {}
         self._next_id = 1
 
-    def add(self, title: str, tags: Optional[list[str]] = None) -> Task:
-        task = Task(id=self._next_id, title=title, tags=tags or [])
+    def add(self, title: str, tags: Optional[list[str]] = None, category: Optional[str] = None) -> Task:
+        task = Task(id=self._next_id, title=title, tags=tags or [], category=category)
         self._tasks[self._next_id] = task
         self._next_id += 1
         return task
@@ -41,6 +42,9 @@ class TaskManager:
 
     def list_all(self) -> list[Task]:
         return list(self._tasks.values())
+
+    def list_by_category(self, category: str) -> list[Task]:
+        return [t for t in self._tasks.values() if t.category == category]
 
 
 if __name__ == "__main__":
