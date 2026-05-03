@@ -98,3 +98,33 @@ def test_comment_persistence(tmp_path):
     tasks = m2.list_all()
     assert len(tasks) == 1
     assert tasks[0].comments == ["A comment"]
+
+
+def test_like_task(tmp_path):
+    storage = tmp_path / "tasks.json"
+    m = TaskManager(storage)
+    t = m.add("Like me")
+    assert t.likes == 0
+    assert m.like(t.id)
+    assert t.likes == 1
+    assert m.like(t.id)
+    assert t.likes == 2
+
+
+def test_like_missing_task(tmp_path):
+    storage = tmp_path / "tasks.json"
+    m = TaskManager(storage)
+    assert not m.like(999)
+
+
+def test_like_persistence(tmp_path):
+    storage = tmp_path / "tasks.json"
+    m1 = TaskManager(storage)
+    t = m1.add("Like me")
+    m1.like(t.id)
+    m1.like(t.id)
+
+    m2 = TaskManager(storage)
+    tasks = m2.list_all()
+    assert len(tasks) == 1
+    assert tasks[0].likes == 2
