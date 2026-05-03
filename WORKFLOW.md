@@ -1,9 +1,7 @@
 ---
 tracker:
   kind: linear
-  # Replace with your Linear project slug.
-  # Right-click the project in Linear → Copy link → slug is the last segment.
-  project_slug: "YOUR_PROJECT_SLUG_HERE"
+  project_slug: "symphony-claude-e60631494ae6"
   active_states:
     - Todo
     - In Progress
@@ -19,7 +17,7 @@ workspace:
   root: ~/code/symphony-test-workspaces
 hooks:
   after_create: |
-    git clone https://github.com/YOUR_GITHUB_USERNAME/symphony-test-repo .
+    git clone https://github.com/andreij6/symphony-test-repo .
     pip install -r requirements.txt
 agent:
   max_concurrent_agents: 3
