@@ -59,3 +59,31 @@ def test_empty_comments_on_new_task():
     m = TaskManager()
     t = m.add("Fresh task")
     assert t.comments == []
+
+
+def test_category_defaults_to_none():
+    m = TaskManager()
+    t = m.add("No category")
+    assert t.category is None
+
+
+def test_add_task_with_category():
+    m = TaskManager()
+    t = m.add("Design spec", category="work")
+    assert t.category == "work"
+
+
+def test_list_by_category():
+    m = TaskManager()
+    m.add("Work task 1", category="work")
+    m.add("Personal task", category="personal")
+    m.add("Work task 2", category="work")
+    work = m.list_by_category("work")
+    assert len(work) == 2
+    assert all(t.category == "work" for t in work)
+
+
+def test_list_by_category_no_match():
+    m = TaskManager()
+    m.add("Task", category="work")
+    assert m.list_by_category("personal") == []
