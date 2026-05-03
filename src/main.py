@@ -10,6 +10,7 @@ class Task:
     title: str
     done: bool = False
     tags: list[str] = field(default_factory=list)
+    description: str = ""
 
 
 class TaskManager:
@@ -17,8 +18,8 @@ class TaskManager:
         self._tasks: dict[int, Task] = {}
         self._next_id = 1
 
-    def add(self, title: str, tags: Optional[list[str]] = None) -> Task:
-        task = Task(id=self._next_id, title=title, tags=tags or [])
+    def add(self, title: str, tags: Optional[list[str]] = None, description: str = "") -> Task:
+        task = Task(id=self._next_id, title=title, tags=tags or [], description=description)
         self._tasks[self._next_id] = task
         self._next_id += 1
         return task
@@ -38,8 +39,8 @@ class TaskManager:
 
 if __name__ == "__main__":
     manager = TaskManager()
-    manager.add("Write tests", tags=["dev"])
-    manager.add("Update docs", tags=["docs"])
+    manager.add("Write tests", tags=["dev"], description="Cover all edge cases")
+    manager.add("Update docs", tags=["docs"], description="Add API reference section")
     manager.complete(1)
 
     print("Pending tasks:")

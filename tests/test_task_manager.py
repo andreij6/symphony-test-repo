@@ -40,3 +40,22 @@ def test_tags():
     m = TaskManager()
     t = m.add("Tagged", tags=["alpha", "beta"])
     assert t.tags == ["alpha", "beta"]
+
+
+def test_description_default_empty():
+    m = TaskManager()
+    t = m.add("No description")
+    assert t.description == ""
+
+
+def test_description_stored():
+    m = TaskManager()
+    t = m.add("With description", description="Some detail here")
+    assert t.description == "Some detail here"
+
+
+def test_description_with_tags():
+    m = TaskManager()
+    t = m.add("Both", tags=["x"], description="Has both tags and description")
+    assert t.tags == ["x"]
+    assert t.description == "Has both tags and description"
