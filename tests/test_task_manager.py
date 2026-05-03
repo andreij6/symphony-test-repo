@@ -40,3 +40,22 @@ def test_tags():
     m = TaskManager()
     t = m.add("Tagged", tags=["alpha", "beta"])
     assert t.tags == ["alpha", "beta"]
+
+
+def test_add_comment():
+    m = TaskManager()
+    t = m.add("Review code")
+    assert m.add_comment(t.id, "Looks good")
+    assert m.add_comment(t.id, "Needs tests")
+    assert t.comments == ["Looks good", "Needs tests"]
+
+
+def test_add_comment_missing_task():
+    m = TaskManager()
+    assert not m.add_comment(999, "nope")
+
+
+def test_empty_comments_on_new_task():
+    m = TaskManager()
+    t = m.add("Fresh task")
+    assert t.comments == []

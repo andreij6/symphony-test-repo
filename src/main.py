@@ -10,6 +10,7 @@ class Task:
     title: str
     done: bool = False
     tags: list[str] = field(default_factory=list)
+    comments: list[str] = field(default_factory=list)
 
 
 class TaskManager:
@@ -26,6 +27,12 @@ class TaskManager:
     def complete(self, task_id: int) -> bool:
         if task_id in self._tasks:
             self._tasks[task_id].done = True
+            return True
+        return False
+
+    def add_comment(self, task_id: int, text: str) -> bool:
+        if task_id in self._tasks:
+            self._tasks[task_id].comments.append(text)
             return True
         return False
 
