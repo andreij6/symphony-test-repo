@@ -77,14 +77,19 @@ Work only in the provided repository copy. Run `pytest tests/ -v` to verify corr
 2. Create or update a single persistent Linear comment (`## Workpad`) with:
    - A short plan checklist
    - Acceptance criteria matching the issue description
-3. Implement the change. Keep it focused — no scope creep.
-4. Run `pytest tests/ -v` — all tests must pass.
-5. Commit with a clear message, push the branch, open a PR.
-6. Move the issue to `Done`.
+3. Create a feature branch: `git checkout -b {{ issue.identifier | downcase }}-<short-slug>`
+   - Example: `git checkout -b spa-9-add-priority-field`
+   - Never commit directly to `main`.
+4. Implement the change on that branch. Keep it focused — no scope creep.
+5. Run `pytest tests/ -v` — all tests must pass.
+6. Commit with a clear message and push: `git push -u origin <branch-name>`
+7. Open a PR targeting `main`: `gh pr create --title "{{ issue.identifier }}: {{ issue.title }}" --body "Closes {{ issue.url }}"`
+8. Move the issue to `Done`.
 
 ### Guardrails
 
 - Use exactly one `## Workpad` comment per issue.
 - Never edit the issue body.
+- Never commit to `main` — always use a feature branch.
 - Keep PRs small and scoped to the issue.
 - If tests fail, fix them before pushing.
