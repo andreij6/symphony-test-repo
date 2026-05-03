@@ -52,7 +52,10 @@ class TaskManager:
         self, title: str, tags: Optional[list[str]] = None, priority: str = "Medium"
     ) -> Task:
         task = Task(
-            id=self._next_id, title=title, tags=tags or [], priority=priority
+            id=self._next_id,
+            title=title,
+            tags=list(tags) if tags else [],
+            priority=priority,
         )
         self._tasks[self._next_id] = task
         self._next_id += 1
