@@ -12,6 +12,13 @@ def test_add_task():
     assert t.id == 1
     assert t.title == "Hello"
     assert not t.done
+    assert t.priority == "Medium"
+
+
+def test_add_task_with_priority():
+    m = TaskManager()
+    t = m.add("High priority task", priority="High")
+    assert t.priority == "High"
 
 
 def test_complete_task():

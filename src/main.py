@@ -9,6 +9,7 @@ class Task:
     id: int
     title: str
     done: bool = False
+    priority: str = "Medium"
     tags: list[str] = field(default_factory=list)
     comments: list[str] = field(default_factory=list)
 
@@ -18,8 +19,12 @@ class TaskManager:
         self._tasks: dict[int, Task] = {}
         self._next_id = 1
 
-    def add(self, title: str, tags: Optional[list[str]] = None) -> Task:
-        task = Task(id=self._next_id, title=title, tags=tags or [])
+    def add(
+        self, title: str, tags: Optional[list[str]] = None, priority: str = "Medium"
+    ) -> Task:
+        task = Task(
+            id=self._next_id, title=title, tags=tags or [], priority=priority
+        )
         self._tasks[self._next_id] = task
         self._next_id += 1
         return task
