@@ -13,6 +13,7 @@ class Task:
     priority: str = "Medium"
     tags: list[str] = field(default_factory=list)
     comments: list[str] = field(default_factory=list)
+    likes: int = 0
 
 
 class TaskManager:
@@ -72,6 +73,13 @@ class TaskManager:
     def add_comment(self, task_id: int, text: str) -> bool:
         if task_id in self._tasks:
             self._tasks[task_id].comments.append(text)
+            self._save()
+            return True
+        return False
+
+    def like(self, task_id: int) -> bool:
+        if task_id in self._tasks:
+            self._tasks[task_id].likes += 1
             self._save()
             return True
         return False
